@@ -14,9 +14,10 @@ internal final class _AcknowledgmentsListViewModel: ObservableObject {
     
     @Published internal var _packages: [Package] = []
     
-    internal init(packageListBundle: Bundle, packageListFileName: String) {
+    internal init(packageListBundle: Bundle, packageListFileName: String, _ otherPackages: [Package] = []) {
         do {
             _packages = try packageList(bundle: packageListBundle, fileName: packageListFileName)
+            _packages.append(contentsOf: otherPackages)
         } catch {
             os_log(
                 "Error: %@",
