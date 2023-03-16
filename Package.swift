@@ -15,9 +15,11 @@ let package = Package(
     ],
     products: [
         .executable(name: "swift-package-list", targets: ["SwiftPackageListCommand"]),
+        .executable(name: "SwiftPackageListCommand", targets: ["SwiftPackageListCommand"]),
         .library(name: "SwiftPackageList", targets: ["SwiftPackageList"]),
         .library(name: "SwiftPackageListObjc", type: .dynamic, targets: ["SwiftPackageListObjc"]),
         .library(name: "SwiftPackageListUI", targets: ["SwiftPackageListUI"]),
+        .plugin(name: "SwiftPackageListPlugin", targets: ["SwiftPackageListPlugin"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.1"),
@@ -56,6 +58,11 @@ let package = Package(
             name: "SwiftPackageListObjcTests",
             dependencies: ["SwiftPackageListObjc"],
             resources: [.process("Resources")]
+        ),
+        .plugin(
+            name: "SwiftPackageListPlugin",
+            capability: .buildTool(),
+            dependencies: [.target(name: "SwiftPackageListCommand")]
         ),
     ]
 )
