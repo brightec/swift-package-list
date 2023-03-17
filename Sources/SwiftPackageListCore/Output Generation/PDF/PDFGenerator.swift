@@ -5,7 +5,16 @@
 //  Created by Felix Herrmann on 11.04.22.
 //
 
-import AppKit
+#if os(OSX)
+    import AppKit
+typealias AliasFont = NSFont
+typealias AliasEdgeInsets = NSEdgeInsets
+#elseif os(iOS)
+    import UIKit
+typealias AliasFont = UIFont
+typealias AliasEdgeInsets = UIEdgeInsets
+#endif
+
 import SwiftPackageList
 
 struct PDFGenerator: OutputGenerator {
@@ -67,10 +76,10 @@ struct PDFGenerator: OutputGenerator {
     }
     
     private func buildAttributedString() throws -> NSMutableAttributedString {
-        guard let defaultFont = NSFont(name: "Helvetica", size: 12) else {
+        guard let defaultFont = AliasFont(name: "Helvetica", size: 12) else {
             throw RuntimeError("Font \"Helvetica\" not available")
         }
-        guard let boldFont = NSFont(name: "Helvetica Bold", size: 12) else {
+        guard let boldFont = AliasFont(name: "Helvetica Bold", size: 12) else {
             throw RuntimeError("Font \"Helvetica Bold\" not available")
         }
         
@@ -112,7 +121,7 @@ struct PDFGenerator: OutputGenerator {
     
     private func calculateDrawableRect(in context: CGContext) -> CGRect {
         let boxRect = context.boundingBoxOfClipPath
-        let insets = NSEdgeInsets(top: 80, left: 80, bottom: 80, right: 80)
+        let insets = AliasEdgeInsets(top: 80, left: 80, bottom: 80, right: 80)
         
         let x = boxRect.origin.x + insets.left
         let y = boxRect.origin.y + insets.top

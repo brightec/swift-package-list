@@ -8,6 +8,7 @@
 #if canImport(SwiftUI)
 
 import SwiftUI
+import SwiftPackageList
 
 /// A `List` that shows all licenses from the package-list file.
 ///
@@ -38,14 +39,16 @@ import SwiftUI
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct AcknowledgmentsList: View {
     
+    private var _title: Text?
     @ObservedObject private var _viewModel: _AcknowledgmentsListViewModel
     
     /// Creates a ``AcknowledgmentsList`` for a package-list file.
     /// - Parameters:
     ///   - packageListBundle: The bundle where the package-list file is stored. Default's to `Bundle.main`.
     ///   - packageListFileName: The name of the package-list file. Default's to `package-list`.
-    public init(packageListBundle: Bundle = .main, packageListFileName: String = "package-list") {
-        _viewModel = _AcknowledgmentsListViewModel(packageListBundle: packageListBundle, packageListFileName: packageListFileName)
+    public init(packageListBundle: Bundle = .main, packageListFileName: String = "package-list", otherPackages: [Package] = [], title: Text? = nil) {
+        _viewModel = _AcknowledgmentsListViewModel(packageListBundle: packageListBundle, packageListFileName: packageListFileName, otherPackages)
+        _title = title
     }
     
     public var body: some View {
@@ -60,7 +63,7 @@ public struct AcknowledgmentsList: View {
                 }
             }
         }
-        ._navigationTitle(Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list"))
+        ._navigationTitle(_title ?? Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list"))
     }
 }
 
