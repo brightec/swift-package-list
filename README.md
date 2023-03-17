@@ -12,6 +12,11 @@ A command-line tool to generate a JSON, PLIST, Settings.bundle or PDF file with 
 This includes all the `Package.resolved` informations and the license from the checkouts.
 Additionally there is a Swift Package to read the generated package-list file from the application's bundle with a top-level function or pre-build UI.
 
+## Brightec Fork
+
+The fork adds a plugin product to the package that allow the executable to be called as a build tool plugin. This can then be used by an XCode project to auto generate a 3rd party licenses view for use in iOS or macOS projects.
+
+AcknowledmentsList has also been updated to allow modification of the screen title. It also allows you to additionally append a list of packages to the packages found in the packag-list.json, this caters for the case where additional licenses need to be added that aren't in the swift package manager list. 
 
 ## Command-Line Tool
 
